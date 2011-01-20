@@ -1,0 +1,28 @@
+<style type="text/css">
+    #logger  {
+        width:800px;
+        margin: 0 auto;
+        border-collapse: collapse;
+        font-family: Arial, Helvetica, sans-serif; 
+    }
+    #logger td, #logger th {
+        border: 1px solid black;
+        padding: 4px;
+    }
+    .key { text-align: center; width: 150px; }
+
+</style>
+
+<?php if (count($this->messages)) : ?>
+<ul id="messages">
+<?php foreach ($this->messages as $message) : ?>
+    <li><?php echo $this->escape($message); ?></li>
+<?php endforeach; ?>
+</ul>
+<?php endif; ?>
+<?php
+echo "<br />";
+echo "Create some log messages by this links: ";
+foreach ($this->priorities as $k => $v) {
+    echo "<a href='".$this->url(array("controller"=>"index", "action"=>"log", "id"=>$k))."'>$v</a> ";
+}
