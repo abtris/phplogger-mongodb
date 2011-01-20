@@ -36,6 +36,10 @@ class App_Log_Writer_MongoDb extends Zend_Log_Writer_Abstract
      */
     public function __construct($options)
     {
+        if (!extension_loaded('mongo')) {
+            throw new Exception('The MongoDB extension must be loaded for using this logger !');
+        }
+
         $options = $options->toArray();
         if (is_null($options)) {
             $options['host'] = "localhost";
