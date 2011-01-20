@@ -20,7 +20,29 @@
 <?php endforeach; ?>
 </ul>
 <?php endif; ?>
+
+<table id='logger'>
+    <tr>
+        <th>Timestamp</th>
+        <th>Message</th>
+        <th>Priority Name</th>
+        <th>Module</th>
+        <th>Controller</th>
+    </tr>
 <?php
+foreach ($this->docs as $d) {
+    if (isset($d['timestamp'])) {
+        echo "<tr>";
+        echo "<td>".$d['timestamp']."</td>";
+        echo "<td>".$d['message']."</td>";
+        echo "<td>".$d['priorityName']."</td>";
+        echo "<td>".$d['module']."</td>";
+        echo "<td>".$d['controller']."</td>";
+        echo "</tr>";
+    }
+}
+echo "</table>";
+
 echo "<br />";
 echo "Create some log messages by this links: ";
 foreach ($this->priorities as $k => $v) {

@@ -12,9 +12,14 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
+         $options = $this->_config->mongodb->toArray();
+         $db = new Mongo("mongodb://{$options['user']}:{$options['pass']}@{$options['host']}:{$options['port']}/{$options['db']}");
+         $db->connect();
+         $c = $db->selectCollection($options['db'], $options['collection']);
+         $cursor = $c->find();
 
-//         $this->view->docs = $result->toArray();
-//         $this->view->messages = $this->_helper->flashMessenger->getMessages();
+         $this->view->docs = iterator_to_array($cursor);;
+         $this->view->messages = $this->_helper->flashMessenger->getMessages();
 
          $logger = new Zend_Log();
          $r = new ReflectionClass($logger);
