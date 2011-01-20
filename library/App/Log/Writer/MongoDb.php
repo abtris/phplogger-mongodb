@@ -50,7 +50,11 @@ class App_Log_Writer_MongoDb extends Zend_Log_Writer_Abstract
         $this->_dbname = $options['db'];
         $this->_collection = $options['collection'];
     }
-
+    /**
+     * @static
+     * @param  $config
+     * @return
+     */
     static public function factory($config)                                                                                                                 
     {
         $config = self::_parseConfig($config);

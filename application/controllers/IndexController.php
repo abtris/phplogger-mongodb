@@ -1,15 +1,25 @@
 <?php
-
+/**
+ * IndexController
+ */
 class IndexController extends Zend_Controller_Action
 {
+    /**
+     * @var Zend_Config
+     */
     protected $_config;
-
+    /**
+     * @return void
+     */
     public function preDispatch()  
     {
             $this->_config = new Zend_Config_Ini('../application/configs/'.
                     'application.ini', APPLICATION_ENV);
     }
-
+    /**
+     * Show records
+     * @return void
+     */
     public function indexAction()
     {
          $options = $this->_config->mongodb->toArray();
@@ -26,7 +36,10 @@ class IndexController extends Zend_Controller_Action
          $this->view->priorities = array_flip($r->getConstants());
 
     }
-
+    /**
+     * Log action
+     * @return void
+     */
     public function logAction()
     {
           $id = $this->_request->getParam('id', 0);  
