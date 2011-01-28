@@ -46,7 +46,12 @@ class App_Log_Writer_MongoDb extends Zend_Log_Writer_Abstract
             $options['port'] = "27017";
             $options['db'] = $dbname;
         }
-        $this->_db = new Mongo("mongodb://{$options['user']}:{$options['pass']}@{$options['host']}:{$options['port']}/{$options['db']}");
+        if (isset($options['user']) && isset($options['pass'])) {
+            $conn = "{$options['user']}:{$options['pass']}@";
+        } else {
+            $conn = "";
+        }
+        $this->_db = new Mongo("mongodb://$conn{$options['host']}:{$options['port']}/{$options['db']}");
         $this->_dbname = $options['db'];
         $this->_collection = $options['collection'];
     }

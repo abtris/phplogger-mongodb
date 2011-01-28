@@ -23,9 +23,19 @@ class IndexController extends Zend_Controller_Action
     public function indexAction()
     {
          $options = $this->_config->mongodb->toArray();
-         $db = new Mongo("mongodb://{$options['user']}:{$options['pass']}@{$options['host']}:{$options['port']}/{$options['db']}");
+         if (isset($options['user']) && isset($options['pass'])) {
+             $conn = "{$options['user']}:{$options['pass']}@";
+         } else {
+             $conn = "";
+         }
+         $db = new Mongo("mongodb://$conn{$options['host']}:{$options['port']}/{$options['db']}");
+         try {
          $db->connect();
+         } catch (Exception $e) {
+             echo $e->getMessage();
+         }
          $c = $db->selectCollection($options['db'], $options['collection']);
+
          $cursor = $c->find();
 
          $this->view->docs = iterator_to_array($cursor);;
